@@ -1,0 +1,86 @@
+<!-- Header -->
+<%- include ("includes/header") %>
+	<!-- Banner e Foto de Perfil -->
+	<div class="single-channel-image">
+		<img class="img-fluid" style="height: 300px; object-fit: cover;" alt="" src="<%= user.coverImage %>"
+			onerror="this.src = '/public/img/channel-banner.png'">
+		<div class="channel-profile">
+			<img class="channel-profile-img" style="object-fit: cover;" alt="" src="<%= user.image %>"
+				onerror="this.src = '/public/img/user_placeholder.jpg'">
+
+		</div>
+	</div>
+	<!-- Navbar do Nome e Vídeos -->
+	<div class="single-channel-nav">
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="channel-brand">
+				<%= user.first_name + " " + user.last_name %> <span title="" data-placement="top" data-toggle="tooltip"
+						data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span>
+			</a>
+			<!-- Muda Layout -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#videos">Videos</a>
+					</li>
+				</ul>
+
+			</div>
+		</nav>
+	</div>
+
+	<div class="container-fluid tab" id="videos">
+		<div class="video-block section-padding">
+			<div class="row" id="videos-section">
+
+				<% if (user.videos) { user.videos=user.videos.reverse(); %>
+					<!-- Ciclo para Carregar Todos os Vídeos do Canal-->
+					<% user.videos.forEach (function (video) { %>
+						<div class="col-xl-3 col-sm-6 mb-3">
+							<div class="video-card">
+								<div class="video-card-image">
+									<a class="play-icon" href="watch?v=<%= video.watch %>"><i
+											class="fas fa-play-circle"></i></a>
+									<a href="watch?v=<%= video.watch %>">
+										<img src="<%= video.thumbnail %>" class="thumbnail"
+											style="width: 266px; height: 167px;">
+									</a>
+									<div class="time">
+										<%= video.minutes + ":" + video.seconds %>
+									</div>
+								</div>
+								<div class="video-card-body">
+									<div class="video-title">
+										<a href="/watch?v=<%= video.watch %>">
+											<%= video.title %>
+										</a>
+										<% if (isMyChannel) { %>
+											<a href="/edit?v=<%= video.watch %>" style="float: right;"><i
+													class="fa fa-edit text-info"></i></a>
+											<% } %>
+									</div>
+									<div class="video-page text-success">
+										<%= video.category %> <i class="fas text-success"></i>
+									</div>
+									<div class="video-view">
+										<%= video.views %> Visualizações &nbsp;<i class="fas fa-calendar-alt"></i>
+											<% var createdAt=new Date(video.createdAt); var date=createdAt.getDate()
+												+ "" ; %>
+												<%= date.padStart(2, "0" ) + " " + months[createdAt.getMonth()] + ", " +
+													createdAt.getFullYear() %>
+									</div>
+								</div>
+							</div>
+						</div>
+					<% }) %>
+				<% } %>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer-->
+	<%- include ("includes/footer") %>

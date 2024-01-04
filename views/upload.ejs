@@ -1,0 +1,67 @@
+<!-- Header -->
+<%- include ("includes/header") %>
+
+<script type="text/javascript">
+   function fileSelected() {
+      var fileName = document.getElementById("file").files[0].name;
+      document.getElementById("filename").innerHTML = fileName;
+   }
+</script>
+
+<!-- Formulário de Edição de Vídeo -->
+<div class="container-fluid pt-5 pb-5" id="video-upload-container">
+   <div class="row">
+
+      <div class="col-md-12">
+         <form method="POST" action="/upload-video" enctype="multipart/form-data">
+
+            <div class="form-group">
+               <label>Selecionar Vídeo</label>
+               <input type="file" name="video" accept="video/mp4,video/*" required>
+            </div>
+
+            <div class="form-group">
+               <label>Selecionar Thumbnail</label>
+               <input type="file" name="thumbnail" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+               <label>Título</label>
+               <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+               <label>Descrição</label>
+               <textarea type="text" name="description" rows="10" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+               <label>Tags</label>
+               <input type="text" name="tags" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label>Categoria</label>
+               <select name="category" class="form-control">
+                  <option value="">Selecionar Categoria</option>
+                  <option value="Tecnologia">Tecnologia</option>
+                  <option value="Gaming">Gaming</option>
+                  <option value="Educação">Educação</option>
+                  <option value="Unboxing">Unboxing</option>
+                  <option value="Desafio">Desafio</option>
+                  <option value="Comédia">Comédia</option>
+                  <option value="Vlogs">Vlogs</option>
+                  <option value="Como se Fazer">Como se Fazer</option>
+                  <option value="Review">Review</option>
+                  <option value="Desporto">Desporto</option>
+               </select>
+            </div>
+
+            <input type="submit" class="btn btn-outline-primary" value="Upload Video">
+         </form>
+      </div>
+   </div>
+</div>
+
+<!-- Footer-fluid -->
+<%- include ("includes/footer") %>

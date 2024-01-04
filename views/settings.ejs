@@ -1,0 +1,65 @@
+<!-- Header -->
+<%- include ("includes/header") %>
+
+   <div class="container-fluid upload-details">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="main-title">
+               <h6>Definições</h6>
+            </div>
+         </div>
+      </div>
+      <form method="POST" action="/save_settings">
+
+         <!-- Aviso de Erro-->
+         <div class="row">
+            <div class="col-md-12">
+               <% if (error !="" ) { %>
+                  <div class="alert alert-danger">
+                     <%= error %>
+                  </div>
+                  <% } %>
+                     <!-- Aviso de Sucesso -->
+                     <% if (message !="" ) { %>
+                        <div class="alert alert-success">
+                           <%= message %>
+                        </div>
+                        <% } %>
+            </div>
+         </div>
+         <!-- Formulário de Eição do Perfil-->
+         <div class="row">
+            <div class="col-sm-6">
+               <div class="form-group">
+                  <label class="control-label">Nome</label>
+                  <input class="form-control border-form-control" name="first_name" value="<%= user.first_name %>"
+                     required>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="form-group">
+                  <label class="control-label">Apelido</label>
+                  <input class="form-control border-form-control" name="last_name" value="<%= user.last_name %>"
+                     required>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-6">
+               <div class="form-group">
+                  <label class="control-label">Password (Deixar em Branco se Não for Alterar)</label>
+                  <input class="form-control border-form-control" name="password" placeholder="******" type="password">
+               </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-sm-12 text-right">
+               <button type="submit" class="btn btn-success border-none"> Guardar Alterações </button>
+            </div>
+         </div>
+      </form>
+   </div>
+
+<!-- Footer -->
+<%- include ("includes/footer") %>

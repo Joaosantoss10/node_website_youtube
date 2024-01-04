@@ -1,0 +1,14 @@
+- Fazer o download e instalar Node JS e Mongo DB
+
+- Correr mongo db server:
+    > ./mongod
+    ou
+    > mongod
+
+- Executar os seguintes comandos:
+    > npm update
+    > npm install nodemon
+    > nodemon server.js
+
+- O servidor fica a correr:
+    > http://localhost:3000/

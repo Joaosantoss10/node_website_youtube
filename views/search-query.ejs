@@ -1,0 +1,47 @@
+<!-- Header -->
+<%- include ("includes/header") %>
+
+      <div class="container-fluid pb-0">
+         <div class="video-block section-padding">
+
+            <div class="row" style="margin-bottom: 20px;">
+               <h3>Resultados da Procura "<i><%= query %></i>"</h3>
+            </div>
+
+            <div class="row">
+               <!-- Ciclo para Carregar Todos os Vídeos da Procura -->
+               <% videos.forEach(function (video) { %>
+                  <div class="col-xl-3 col-sm-6 mb-3">
+                     <div class="video-card">
+                        <div class="video-card-image">
+                           <a class="play-icon" href="watch?v=<%= video.watch %>"><i class="fas fa-play-circle"></i></a>
+                           <a href="watch?v=<%= video.watch %>">
+                              <video width="270" height="169" poster="<%= video.thumbnail %>" src="<%= video.filePath %>"></video>
+                           </a>
+                           <div class="time"><%= video.duration %></div>
+                        </div>
+                        <div class="video-card-body">
+                           <div class="video-title">
+                              <a href="watch?v=<%= video.watch %>"><%= video.title %></a>
+                           </div>
+                           <div class="video-page text-success">             
+                                 <%= video.category %> <i class="fas text-success"></i>      
+                           </div>
+                           <div class="video-view">
+                              <%= video.views %> Visualizações &nbsp;<i class="fas fa-calendar-alt"></i> <%
+                                 var createdAt = new Date(video.createdAt);
+                                 var date = createdAt.getDate() + "";
+                              %>
+                                 <%= date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               <% }) %>
+
+            </div>
+         </div>
+      </div>
+
+<!-- Footer -->
+<%- include ("includes/footer") %>

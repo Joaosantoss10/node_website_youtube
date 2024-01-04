@@ -1,0 +1,22 @@
+<%- include ("includes/header") %>
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-8 mx-auto text-center  pt-4 pb-5">
+         <h1><img alt="404" src="/public/img/404.png" class="img-fluid"></h1>
+         <h1>PÁGINA NÃO ENCONTRADA.</h1>
+
+		 <% if (message == "") { %>
+         	<h3>Infelizmente a Página que Procura Não Foi Encontrada.</h3>
+		 <% } else { %>
+			<h3><%= message %></h3>
+		 <% } %>
+
+         <div class="mt-5">
+            <a class="btn btn-outline-primary" href="/"><i class="mdi mdi-home"></i> VOLTAR PARA A PÁGINA PRINCIPAL</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+<%- include ("includes/footer") %>

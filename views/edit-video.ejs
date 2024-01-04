@@ -1,0 +1,151 @@
+<!-- Header -->
+<%- include ("includes/header") %>
+
+   <form method="POST" action="/edit?v=<%= video.watch %>" enctype="multipart/form-data">
+
+      <input type="hidden" name="videoId" value="<%= video._id %>">
+      <input type="hidden" name="thumbnailPath" value="<%= video.thumbnail %>">
+
+      <div class="container-fluid upload-details">
+
+         <div class="row">
+            <div class="col-md-12">
+               <% if (typeof message !=="undefined" ) { %>
+                  <div class="alert alert-success">
+                     <%= message %>
+                  </div>
+                  <% } %>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="main-title">
+                  <h6>Detalhes do Vídeo</h6>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="imgplace1">
+                  <img class="thumbnail" id="thumbnail" src="<%= video.thumbnail %>">
+               </div>
+            </div>
+            <div class="col-lg-8">
+               <div class="osahan-size" id="file-information">
+                  <%= video.minutes ? (video.minutes + ":" + video.seconds + " MIN" ) : "" %>
+               </div>
+            </div>
+         </div>
+         <hr>
+
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="osahan-form">
+
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="form-group">
+                           <label>Selecionar Thumbnail</label>
+                           <input type="file" name="thumbnail" onchange="previewThumnail(this);" accept="image/*">
+                        </div>
+                     </div>
+                  </div>
+
+                  <script type="text/javascript">
+                     function previewThumnail(file) {
+                        var fileReader = new FileReader();
+                        fileReader.onload = function (e) {
+                           document.getElementById("thumbnail").setAttribute("src", e.target.result);
+                        };
+                        fileReader.readAsDataURL(file.files[0]);
+                     }
+                  </script>
+
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="form-group">
+                           <label for="input-video-title">Título</label>
+                           <input type="text" name="title" id="input-video-title" class="form-control"
+                              value="<%= video.title %>">
+                        </div>
+                     </div>
+                     <div class="col-lg-12">
+                        <div class="form-group">
+                           <label for="description">Descrição</label>
+                           <textarea rows="5" id="description" name="description"
+                              class="form-control"><%= video.description %></textarea>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-lg-5">
+                        <div class="form-group">
+                           <label for="tags">Tags</label>
+                           <input type="text" id="tags" name="tags" class="form-control" value="<%= video.tags %>">
+                        </div>
+                     </div>
+                     <div class="col-lg-5">
+                        <div class="form-group">
+                           <label for="category">Categoria</label>
+                           <select id="category" name="category" class="form-control">
+                              <option value="Tecnologia" <%=video.category=='Tecnologia' ? 'selected' : '' %>>Tecnologia</option>
+                              <option value="Gaming" <%=video.category=='Gaming' ? 'selected' : '' %>>Gaming</option>
+                              <option value="Educação" <%=video.category=='Educação' ? 'selected' : '' %>>Educação</option>
+                              <option value="Unboxing" <%=video.category=='Unboxing' ? 'selected' : '' %>>Unboxing</option>
+                              <option value="Desafio" <%=video.category=='Desafio' ? 'selected' : '' %>>Desafio</option>
+                              <option value="Comédia" <%=video.category=='Comédia' ? 'selected' : '' %>>Comédia</option>
+                              <option value="Vlogs" <%=video.category=='Vlogs' ? 'selected' : '' %>>Vlogs</option>
+                              <option value="Como se Fazer" <%=video.category=='Como se Fazer' ? 'selected' : '' %>>Como se Fazer</option>
+                              <option value="Review" <%=video.category=='Review' ? 'selected' : '' %>>Review</option>
+                              <option value="Desporto" <%=video.category=='Desporto' ? 'selected' : '' %>>Desporto</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+
+               <div class="osahan-area text-center mt-3">
+                  <!-- Guardar Alterações-->
+                  <button class="btn btn-outline-primary" type="submit">Guardar Alterações</button>
+                  <p id="save-status" style="margin-top: 10px;"></p>
+
+                  <!-- Apagar Vídeo -->
+                  <a href="/delete-video?v=<%= video.watch %>" class="btn btn-danger border-none"
+                  onclick="return confirm('Tem a Certeza que Quer Apagar o Vídeo ?');">Apagar Vídeo</a>
+               </div>
+               <hr>
+            </div>
+         </div>
+      </div>
+
+      <input type="hidden" id="videoId" value="<%= video._id %>">
+
+   </form>
+
+   <!-- Script para Altrar Dados -->
+   <script type="text/javascript">
+      function saveVideo() {
+         var ajax = new XMLHttpRequest();
+         ajax.open("POST", "/update-video", true);
+         ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+         ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+               var response = JSON.parse(this.responseText);
+
+               document.getElementById("save-status").setAttribute("class", "text-" + response.status);
+               document.getElementById("save-status").innerHTML = response.message;
+            }
+         };
+
+         var title = document.getElementById("input-video-title").value;
+         var description = document.getElementById("description").value;
+         var tags = document.getElementById("tags").value;
+         var category = document.getElementById("category").value;
+         var videoId = document.getElementById("videoId").value;
+
+         ajax.send("title=" + title + "&description=" + description + "&tags=" + tags + "&videoId=" + videoId + "&category=" + category + "&playlist=" + playlist);
+      }
+   </script>
+
+   <%- include ("includes/footer") %>

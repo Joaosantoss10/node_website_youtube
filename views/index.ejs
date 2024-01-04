@@ -1,0 +1,71 @@
+<%- include ("includes/header") %>
+
+      <div class="container-fluid pb-0">
+         <div class="video-block section-padding">
+            <div class="row" id="videos-section">
+
+               <!-- Carrega Todos os Vídeos -->
+               <% videos.forEach(function (video) { %>
+                  <div class="col-xl-3 col-sm-6 mb-3">
+                     <div class="video-card">
+                        <!-- Tempo do Vídeo -->
+                        <div class="video-card-image">
+                           <a class="play-icon" href="watch?v=<%= video.watch %>"><i class="fas fa-play-circle"></i></a>
+                           <a href="watch?v=<%= video.watch %>">
+                              <img class="thumbnail" src="<%= video.thumbnail %>" style="width: 270px; height: 169px;">
+                           </a>
+                           <div class="time"><%= video.minutes + ":" + video.seconds %></div>
+                        </div>
+                        <!-- Título do Vídeo -->
+                        <div class="video-card-body">
+                           <div class="video-title">
+                              <a href="watch?v=<%= video.watch %>"><%= video.title %></a>
+                           </div>
+                           <!-- Categoria do Vídeo -->
+                           <div class="video-page text-success">
+                              <%= video.category %> <i class="fas text-success"></i>
+                           </div>
+                           <!-- Data do Vídeo -->
+                           <div class="video-view">
+                              <%= video.views %> Visualizações &nbsp;<i class="fas fa-calendar-alt"></i> <%
+                                 var createdAt = new Date(video.createdAt);
+                                 var date = createdAt.getDate() + "";
+                              %>
+                                 <%= date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               <% }) %>
+
+            </div>
+         </div>
+      </div>
+
+<%- include ("includes/footer") %>
+
+<!-- <% if (typeof isLogin !== "undefined" && isLogin) { %>
+   <script>
+      window.onbeforeunload = function () {
+
+         var videoPlayer = document.getElementById("videoPlayer");
+         var watched = Math.floor(videoPlayer.currentTime);
+
+         if (watched > 0) {
+            var videoId = document.getElementById("videoId").value;
+
+            var ajax = new XMLHttpRequest();
+            ajax.open("POST", "/save-history", true);
+            ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            ajax.onreadystatechange = function () {
+               if (this.readyState == 4 && this.status == 200) {
+                  console.log(this.responseText);
+               }
+            };
+
+            ajax.send("videoId=" + videoId + "&watched=" + watched);
+         }
+      };
+   </script>
+<% } %> -->
